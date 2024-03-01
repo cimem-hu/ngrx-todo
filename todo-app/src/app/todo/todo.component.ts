@@ -6,11 +6,11 @@ import { TodoCountComponent } from "./todo-count.component";
 import { TodoInputComponent } from "./todo-input.component";
 import { TodoService } from "./todo.service";
 
-export interface Todo {
+export type Todo = {
   id: number;
   name: string;
   done: boolean;
-}
+};
 
 @Component({
   selector: "app-todo",

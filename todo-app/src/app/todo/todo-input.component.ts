@@ -7,10 +7,8 @@ import { TodoService } from "./todo.service";
   selector: "app-todo-input",
   standalone: true,
   imports: [FormsModule],
-  template: `<div style="display: flex; width: 100%">
-    <input type="text" [(ngModel)]="todoName" />
-    <button [disabled]="!todoName.trim().length" (click)="onAddTodo()">Add</button>
-  </div>`
+  template: `<input type="text" [(ngModel)]="todoName" />
+    <button [disabled]="!todoName.trim().length" (click)="onAddTodo()">Add</button>`
 })
 export class TodoInputComponent {
   private readonly todoService = inject(TodoService);
