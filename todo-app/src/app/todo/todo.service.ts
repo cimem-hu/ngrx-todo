@@ -1,10 +1,11 @@
-import { Injectable } from '@angular/core';
-import { Todo } from './todo.component';
-import { BehaviorSubject } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Todo } from "./todo.component";
+import { BehaviorSubject } from "rxjs";
 
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: "root" })
 export class TodoService {
   todos: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([]);
+
   todoToBeDoneCount: BehaviorSubject<number> = new BehaviorSubject(0);
   todoFinishedCount: BehaviorSubject<number> = new BehaviorSubject(0);
 
@@ -12,42 +13,24 @@ export class TodoService {
     const todo: Todo = {
       name: todoName,
       id: Math.floor(Math.random() * 10000),
-      done: false,
+      done: false
     };
     this.todos.next([todo, ...this.todos.value]);
-    this.todoToBeDoneCount.next(
-      this.todos.value.filter((todo) => !todo.done).length
-    );
-    this.todoFinishedCount.next(
-      this.todos.value.filter((todo) => todo.done).length
-    );
+    this.updateTodoCounts();
   }
 
   removeTodo(id: number) {
     this.todos.next(this.todos.value.filter((todo) => todo.id !== id));
-    this.todoToBeDoneCount.next(
-      this.todos.value.filter((todo) => !todo.done).length
-    );
-    this.todoFinishedCount.next(
-      this.todos.value.filter((todo) => todo.done).length
-    );
+    this.updateTodoCounts();
   }
 
   toggleDone(id: number) {
-    this.todos.next(
-      this.todos.value.map((todo) => {
-        if (todo.id === id) {
-          return { ...todo, done: !todo.done };
-        }
-        return todo;
-      })
-    );
+    this.todos.next(this.todos.value.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo)));
+    this.updateTodoCounts();
+  }
 
-    this.todoToBeDoneCount.next(
-      this.todos.value.filter((todo) => !todo.done).length
-    );
-    this.todoFinishedCount.next(
-      this.todos.value.filter((todo) => todo.done).length
-    );
+  private updateTodoCounts() {
+    this.todoToBeDoneCount.next(this.todos.value.filter((todo) => !todo.done).length);
+    this.todoFinishedCount.next(this.todos.value.filter((todo) => todo.done).length);
   }
 }

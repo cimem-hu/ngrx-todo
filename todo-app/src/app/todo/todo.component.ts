@@ -1,10 +1,4 @@
-import {
-  Component,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-  inject,
-} from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { TodoListItemComponent } from './todo-list-item.component';
