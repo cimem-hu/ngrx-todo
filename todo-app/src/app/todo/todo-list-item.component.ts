@@ -1,24 +1,20 @@
-import { Component, Input, inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, Input, inject } from "@angular/core";
+import { CommonModule } from "@angular/common";
 
-import { Todo } from './todo.component';
-import { TodoService } from './todo.service';
+import { Todo } from "./todo.component";
+import { TodoService } from "./todo.service";
 
 @Component({
-  selector: 'app-todo-list-item',
+  selector: "app-todo-list-item",
   standalone: true,
   imports: [CommonModule],
   template: ` @if (todo) {
     <div>
-      <input
-        type="checkbox"
-        [checked]="todo.done"
-        (change)="onToggleTodo(todo.id)"
-      />
+      <input type="checkbox" [checked]="todo.done" (change)="onToggleTodo(todo.id)" />
       {{ todo.name }}
       <button (click)="onDeleteTodo(todo.id)">Delete</button>
     </div>
-    }`,
+    }`
 })
 export class TodoListItemComponent {
   private readonly todoService = inject(TodoService);
