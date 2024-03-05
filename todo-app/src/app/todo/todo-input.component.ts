@@ -3,7 +3,7 @@ import { FormsModule } from "@angular/forms";
 import { Store } from "@ngrx/store";
 
 import { AppStore } from "../app.state";
-import { addTodo } from "./store/todo.actions";
+import { addTodoStarted } from "./store/todo.actions";
 
 @Component({
   selector: "app-todo-input",
@@ -20,7 +20,7 @@ export class TodoInputComponent {
     if (!this.todoName.trim()) {
       return;
     }
-    this.store.dispatch(addTodo({ id: Math.floor(Math.random() * 10000), name: this.todoName, done: false }));
+    this.store.dispatch(addTodoStarted({ name: this.todoName, done: false }));
     this.todoName = "";
   }
 }
