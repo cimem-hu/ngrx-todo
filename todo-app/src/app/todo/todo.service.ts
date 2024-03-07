@@ -1,12 +1,6 @@
 import { Injectable, inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
-import {
-  AddTodoRequest,
-  AddTodoResponse,
-  GetTodosResponse,
-  RemoveTodoResponse,
-  ToggleTodoResponse
-} from "./store/todo.actions";
+import { AddTodoRequest, AddTodoResponse, RemoveTodoResponse, ToggleTodoResponse } from "./store/todo.actions";
 import { Todo } from "./todo.component";
 
 @Injectable({ providedIn: "root" })
