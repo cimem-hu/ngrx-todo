@@ -14,10 +14,10 @@
   // "features": {},
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
-  // "forwardPorts": [],
+  "forwardPorts": [4200, 3000],
 
   // Use 'postCreateCommand' to run commands after the container is created.
-  "postCreateCommand": "cd backend && npm install && cd ../frontend && npm install",
+  "postCreateCommand": "cd todo-app && npm install && cd ../todo-api && npm install",
 
   // Configure tool-specific properties.
   "customizations": {
