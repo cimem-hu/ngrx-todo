@@ -42,9 +42,8 @@ describe("Todo Effects", () => {
       todoService.addTodo = vitest.fn().mockReturnValue(of(todo));
 
       const action = todoEffects.handleAddTodoSideEffects$;
-      action.pipe(take(1)).subscribe((outputActions) => {
-        expect(outputActions).toEqual(outcome);
-      });
+      const outputAction = await lastValueFrom(action.pipe(take(1)));
+      expect(outputAction).toEqual(outcome);
     });
 
     it("should dispatch addTodoError when todoService.addTodo fails", async () => {
