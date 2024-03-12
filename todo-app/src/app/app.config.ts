@@ -4,7 +4,7 @@ import { provideStoreDevtools } from "@ngrx/store-devtools";
 import { provideEffects } from "@ngrx/effects";
 
 import { todoStore } from "./todo/store/todo.reducers";
-import { todoEffects } from "./todo/store/todo.effects";
+import { TodoEffects } from "./todo/store/todo.effects";
 import { provideHttpClient } from "@angular/common/http";
 
 export const appConfig: ApplicationConfig = {
@@ -19,7 +19,7 @@ export const appConfig: ApplicationConfig = {
       }
     ),
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
-    provideEffects(todoEffects),
+    provideEffects(TodoEffects),
     provideHttpClient()
   ]
 };
