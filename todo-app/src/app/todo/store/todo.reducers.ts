@@ -34,7 +34,7 @@ const todoStore = createReducer(
   //getTodos
 
   // or grouped actions
-  //  on(getTodosStarted, toggleTodoStarted, removeTodoStarted, addTodoStarted, (state) => ({ ...state, isLoading: true })),
+  // on(getTodosStarted, toggleTodoStarted, removeTodoStarted, addTodoStarted, (state) => ({ ...state, isLoading: true })),
 
   on(getTodosStarted, (state) => ({ ...state, isLoading: true })),
   on(getTodosSuccess, (state, { todos }) => ({
