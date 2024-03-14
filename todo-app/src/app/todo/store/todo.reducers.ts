@@ -58,7 +58,6 @@ const todoStore = createReducer(
   on(removeTodoSuccess, (state, { id }) => ({
     ...state,
     todos: state.todos.filter((todo) => {
-      console.log(todo.id, id);
       return id !== todo.id;
     }),
     isLoading: false
