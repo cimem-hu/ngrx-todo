@@ -1,6 +1,7 @@
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { catchError, exhaustMap, map, of } from "rxjs";
 import { HttpErrorResponse } from "@angular/common/http";
+import { Injectable } from "@angular/core";
 
 import { TodoService } from "../todo.service";
 import {
@@ -21,6 +22,7 @@ import {
   toggleTodoSuccess
 } from "./todo.actions";
 
+@Injectable()
 export class TodoEffects {
   constructor(private readonly actions$: Actions, private readonly todoService: TodoService) {}
 
