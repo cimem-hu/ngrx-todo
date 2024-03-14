@@ -1,8 +1,10 @@
 import { Component, Input, inject } from "@angular/core";
 import { CommonModule } from "@angular/common";
+import { Store } from "@ngrx/store";
 
 import { Todo } from "./todo.component";
-import { TodoService } from "./todo.service";
+import { AppStore } from "../app.state";
+import { removeTodoStarted, toggleTodoStarted } from "./store/todo.actions";
 
 @Component({
   selector: "app-todo-list-item",
@@ -10,21 +12,21 @@ import { TodoService } from "./todo.service";
   imports: [CommonModule],
   template: ` @if (todo) {
     <div>
-      <input type="checkbox" [checked]="todo.done" (change)="onToggleTodo(todo.id)" />
+      <input type="checkbox" [checked]="todo.done" (change)="onToggleTodo()" />
       {{ todo.name }}
-      <button (click)="onDeleteTodo(todo.id)">Delete</button>
+      <button (click)="onDeleteTodo()">Delete</button>
     </div>
     }`
 })
 export class TodoListItemComponent {
-  private readonly todoService = inject(TodoService);
+  private readonly store = inject(Store<AppStore>);
 
   @Input() todo?: Todo;
-  onDeleteTodo(id: number) {
-    this.todoService.removeTodo(id);
+  onDeleteTodo() {
+    this.store.dispatch(removeTodoStarted({ id: this.todo!.id }));
   }
 
-  onToggleTodo(id: number) {
-    this.todoService.toggleDone(id);
+  onToggleTodo() {
+    this.store.dispatch(toggleTodoStarted({ id: this.todo!.id, done: !this.todo?.done }));
   }
 }

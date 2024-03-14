@@ -1,36 +1,26 @@
-import { Injectable } from "@angular/core";
+import { Injectable, inject } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { AddTodoRequest, AddTodoResponse, RemoveTodoResponse, ToggleTodoResponse } from "./store/todo.actions";
 import { Todo } from "./todo.component";
-import { BehaviorSubject } from "rxjs";
 
 @Injectable({ providedIn: "root" })
 export class TodoService {
-  todos: BehaviorSubject<Todo[]> = new BehaviorSubject<Todo[]>([]);
+  private baseUrl = "http://localhost:3000/todos";
+  private http = inject(HttpClient);
 
-  todoToBeDoneCount: BehaviorSubject<number> = new BehaviorSubject(0);
-  todoFinishedCount: BehaviorSubject<number> = new BehaviorSubject(0);
+  getTodos() {
+    return this.http.get<Todo[]>(this.baseUrl);
+  }
 
-  addTodo(todoName: string) {
-    const todo: Todo = {
-      name: todoName,
-      id: Math.floor(Math.random() * 10000),
-      done: false
-    };
-    this.todos.next([todo, ...this.todos.value]);
-    this.updateTodoCounts();
+  addTodo(todo: AddTodoRequest) {
+    return this.http.post<AddTodoResponse>(this.baseUrl, todo);
   }
 
   removeTodo(id: number) {
-    this.todos.next(this.todos.value.filter((todo) => todo.id !== id));
-    this.updateTodoCounts();
+    return this.http.delete<RemoveTodoResponse>(`${this.baseUrl}/${id}`);
   }
 
-  toggleDone(id: number) {
-    this.todos.next(this.todos.value.map((todo) => (todo.id === id ? { ...todo, done: !todo.done } : todo)));
-    this.updateTodoCounts();
-  }
-
-  private updateTodoCounts() {
-    this.todoToBeDoneCount.next(this.todos.value.filter((todo) => !todo.done).length);
-    this.todoFinishedCount.next(this.todos.value.filter((todo) => todo.done).length);
+  toggleTodo(id: number, done: boolean) {
+    return this.http.put<ToggleTodoResponse>(`${this.baseUrl}/${id}`, { done });
   }
 }
